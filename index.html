@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Will You Be My Valentine?</title>
+    <style>
+        body {
+            background-color: #ffb6c1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #ff0000;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .buttons-container {
+            position: relative;
+            height: 60px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: absolute;
+        }
+
+        #yesBtn {
+            background-color: #4CAF50;
+            color: white;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .hearts {
+            position: fixed;
+            pointer-events: none;
+            animation: float 3s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will you be my Valentine? 💖</h1>
+        <div class="buttons-container">
+            <button id="yesBtn" onclick="accept()">YES!</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+    </div>
+
+    <script>
+        let yesScale = 1;
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+
+        function moveButton() {
+            // Move No button randomly
+            const container = document.querySelector('.buttons-container');
+            const containerRect = container.getBoundingClientRect();
+            
+            const maxX = containerRect.width - noBtn.offsetWidth;
+            const maxY = containerRect.height - noBtn.offsetHeight;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.left = ${randomX}px;
+            noBtn.style.top = ${randomY}px;
+
+            // Make Yes button bigger
+            yesScale += 0.2;
+            yesBtn.style.transform = translateX(-50%) scale(${yesScale});
+            
+            // Create floating hearts
+            createHearts();
+        }
+
+        function accept() {
+            document.body.innerHTML = `
+                <div class="container">
+                    <h1>Yay! You've made me the happiest! 💝</h1>
+                    <p>Let's make this Valentine's Day special! 🥰</p>
+                </div>
+            `;
+            document.body.style.backgroundColor = "#ff69b4";
+            
+            // Create heart explosion
+            for (let i = 0; i < 50; i++) {
+                createHearts();
+            }
+        }
+
+        function createHearts() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💖';
+            heart.className = 'hearts';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.animation = float ${Math.random() * 2 + 1}s linear;
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
